@@ -104,7 +104,11 @@ FUNCTION InitializeComponenets (ContainerElement)
 	
 	FOR EACH oElement IN ContainerElement.Controls
 		IF(oElement.Class = "Check_Shape")
-			lnPositionCounter = oElement.Top
+			IF(RIGHT(oElement.Name, 1) = "1)
+				lnPositionCounter = oElement.Top
+			ELSE
+				lnPositionCounter = oElement.Top + 35
+			ENDIF
 		ELSE
 			IF(oElement.Class = "Container")
 				IF (oElement.ControlCount = 6)
