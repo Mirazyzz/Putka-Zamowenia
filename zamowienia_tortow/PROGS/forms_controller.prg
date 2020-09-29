@@ -31,7 +31,7 @@ FUNCTION ContainersController (ContainerParam, checkedElement)
 				FOR EACH oContainerElement IN oElement.Controls
 					
 					&& Check if the element of container is checkbox
-					IF(oContainerElement.Class = "Check_shape")
+					IF(oContainerElement.Class = checkedElement.Class)
 						oContainerElement.Checked = .F.
 					ENDIF
 				ENDFOR
@@ -39,7 +39,7 @@ FUNCTION ContainersController (ContainerParam, checkedElement)
 		ENDIF
 		
 		&& uncheck all other checkboxes
-		IF(oElement.Class = "Check_shape")
+		IF(oElement.Class = checkedElement.Class)
 			IF(oElement.Name != checkedElement.Name)
 				oElement.Checked = .F.
 			ENDIF
@@ -373,7 +373,7 @@ FUNCTION InitializeComponenets (ContainerElement)
 	
 	FOR EACH oElement IN ContainerElement.Controls
 		MESSAGEBOX(oElement.Name)
-		IF(oElement.Class = "Check_Shape")
+		IF(oElement.Class = "Checkbox_image")
 			lnPositionCounter = oElement.Top
 		ELSE
 			IF(oElement.Class = "Container")
