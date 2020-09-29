@@ -1,3 +1,0 @@
-SET CONSOLE ON ;
-
-? 2 + 2

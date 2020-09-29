@@ -49,7 +49,7 @@ FUNCTION ContainersController (ContainerParam, checkedElement)
 ENDFUNC	
 
 
-FUNCTION ChangeElementsPosition (checkedElement, ContainerElement)
+FUNCTION ChangeElementsPosition (ContainerElement, checkedElement)
 	
 	***************************************************************
 	* Because of some bug, needed to position to left last element*
@@ -60,6 +60,10 @@ FUNCTION ChangeElementsPosition (checkedElement, ContainerElement)
 	&& ContainerElement.Checkbox5.Left = 0
 	&& ContainerElement.Label5.Left = 40
 	&& ContainerElement.Container5.Left = 40
+	
+	FOR EACH oElement IN ContainerElement.Controls
+		MESSAGEBOX(oElement.Class)
+	ENDFOR
 
 	IF(RIGHT(checkedElement.Name, 1) = "3")
 		IF(checkedElement.Checked)
@@ -108,15 +112,15 @@ FUNCTION ChangeElementsPosition (checkedElement, ContainerElement)
 	ENDIF
 ENDFUNC
 
-FUNCTION ChangeContainer2ElementsPosition (checkedElement, ContainerElement)
+FUNCTION ChangeContainer2ElementsPosition (ContainerElement, checkedElement)
 	***************************************************************
 	* Because of some bug, needed to position to left last element*
 	***************************************************************
 	* 						TODO: FIX IT						  *
 	***************************************************************
-	ContainerElement.Checkbox7.Left = 0
-	ContainerElement.Label7.Left = 60
-	ContainerElement.Container7.Left = 40
+*!*		ContainerElement.Checkbox7.Left = 0
+*!*		ContainerElement.Label7.Left = 60
+*!*		ContainerElement.Container7.Left = 40
 	
 	
 	IF(RIGHT(checkedElement.Name, 1) = "1")

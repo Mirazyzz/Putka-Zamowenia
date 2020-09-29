@@ -1,4 +1,4 @@
-* C:\ZAMOWIENIA_TORTOW\ZAMOWIENIA_TORTO_APP.H
+* C:\ZAMOWIENIA_TORTO\ZAMOWIENIA_TORTO_APP.H
 
 * This file is a generated, framework-enabling component
 * created by APPBUILDER 
@@ -6,12 +6,12 @@
 
 
 * header file holding framework-generated project data for
-* C:\ZAMOWIENIA_TORTOW\ZAMOWIENIA_TORTO Project
+* C:\ZAMOWIENIA_TORTO\ZAMOWIENIA_TORTO Project
 
 * the following is for your reference/identification --
 * the application object and splash receive this information into
 * their cCaption property, and this #DEFINE does not provide it:
-* #DEFINE APP_NAME                "Zamowienia_Tortow"
+* #DEFINE APP_NAME                "zamowienia_tortow"
 
 
 #DEFINE APP_SUPERCLASS         "_application"
