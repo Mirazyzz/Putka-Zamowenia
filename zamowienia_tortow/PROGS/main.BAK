@@ -13,6 +13,7 @@ SET CENTURY ON && Turn on the full year display (current year is: 2020,
 
 SET PATH TO PROGS, LIBS, PRG, MENUS, DATA, REPORTS, GRAPHICS, FORMS && Set project's folders path
 SET PROCEDURE TO "C:\zamowienia_tortow\PROGS\class_validation.prg" ADDITIVE
+SET PROCEDURE TO "C:\zamowienia_tortow\PROGS\db_layer.prg" ADDITIVE
 
-DO FORM glowna_forma && start the main form
+DO FORM glowna_forma && start the main form
 READ events

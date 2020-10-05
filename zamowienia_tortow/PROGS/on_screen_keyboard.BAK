@@ -1,0 +1,81 @@
+ShowKeyboard()
+
+*****************************************************************************************
+* Function....:	 ShowKeyboard
+* Author......:  Bernard Bout
+* Date........:  11/07/2008 9:44:25 AM
+* Returns.....:	 
+* Parameters..:  
+* Notes.......:  Open on screen keyboard / close it if open
+*****************************************************************************************
+FUNCTION ShowKeyboard
+	Declare Long FindWindow In WIN32API String, String
+	Declare Long SetWindowPos In WIN32API Integer,Integer,Integer,Integer,Integer,Integer,Integer
+	Declare Long ShowWindow In WIN32API Long, Long
+	Declare SHORT PostMessage In user32;
+		INTEGER   HWnd,;
+		INTEGER   Msg,;
+		STRING  @ wParam,;
+		INTEGER   Lparam
+
+	HWnd = FindWindow( .Null. , "On-Screen Keyboard" )
+
+	If HWnd = 0
+		Run /N osk
+		HWnd = FindWindow( .Null. , "On-Screen Keyboard")
+		* position the window and stretch it to fullscreen
+		SetWindowPos( HWnd , -1 , 1, Sysmetric(22)-245 , Sysmetric(21) , 300 , 0 )
+	Else
+		* Close keyboard if already open
+		lRetVal = PostMessage(HWnd,16,0,0)
+	Endif
+	RETURN 
+EndFunc
+
+*EOFUN OpenKeyboard
+*****************************************************************************************
+* Function....:	 CloseKeyboard
+* Author......:  Bernard Bout
+* Date........:  11/07/2008 9:46:49 AM
+* Returns.....:	 
+* Parameters..:  
+* Notes.......:  Closes the on screen keyboard if it is open
+*****************************************************************************************
+FUNCTION CloseKeyboard
+	CloseScreen("On-Screen Keyboard")
+	RETURN 
+ENDFUNC
+*EOFUN CloseKeyboard
+
+*****************************************************************************************
+* Function....:	 CloseScreen
+* Author......:  Bernard Bout
+* Date........:  23/07/2008 11:00:14 AM
+* Returns.....:	 
+* Parameters..:  
+* Notes.......:  Closes the an on-screen application
+*****************************************************************************************
+FUNCTION CloseScreen
+	LPARAMETERS tcFile As String
+	Local lRetVal As Boolean
+	
+	Declare Integer FindWindow ;
+		IN WIN32API String cNull,String cWinName
+	Declare SHORT PostMessage In user32;
+		INTEGER   HWnd,;
+		INTEGER   Msg,;
+		STRING  @ wParam,;
+		INTEGER   Lparam
+		
+	lRetVal = .F.
+	* the caption of the window
+	HWnd = FindWindow(0,tcFile)
+	If HWnd #0
+		lRet = PostMessage(HWnd,16,0,0)
+		IF lRet = 1
+			lRetVal = .T.
+		ENDIF
+	ENDIF
+	RETURN lRetVal 
+ENDFUNC
+*EOFUN CloseScreen
