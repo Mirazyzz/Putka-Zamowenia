@@ -1,0 +1,4 @@
+Compiling c:\zamowienia_torto\progs\forms_controller.prg
+IF(RIGHT(oElement.Caption, 1) = RIGHT(oCheckedElement.Name, 1)
+Error in line 451: Function name is missing ).
+

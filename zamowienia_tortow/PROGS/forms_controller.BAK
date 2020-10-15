@@ -61,54 +61,63 @@ FUNCTION ChangeElementsPosition (ContainerElement, checkedElement)
 	&& ContainerElement.Label5.Left = 40
 	&& ContainerElement.Container5.Left = 40
 
-	IF(RIGHT(checkedElement.Name, 1) = "3")
+	IF(RIGHT(checkedElement.Name, 1) = "4")
+
 		IF(checkedElement.Checked)
-			ContainerElement.Checkbox4.Top = 300
-			ContainerElement.Label4.Top = 300
-			ContainerElement.Container5.Top = 330
+			ContainerElement.Checkbox5.Top = 280
+			ContainerElement.Label5.Top = 280
+			ContainerElement.Container5.Top = 310
 			
-			ContainerElement.Checkbox5.Top = 340
-			ContainerElement.Label5.Top = 340
-			ContainerElement.Container5.Top = 370
+			ContainerElement.Checkbox6.Top = 320
+			ContainerElement.Label6.Top = 320
+			ContainerElement.Container6.Top = 350
 		ELSE
-			ContainerElement.Checkbox4.Top = 160
-			ContainerElement.Label4.Top = 160
-			ContainerElement.Container4.Top = 190
-			
 			ContainerElement.Checkbox5.Top = 200
 			ContainerElement.Label5.Top = 200
-			ContainerElement.Container5.Top = 220
+			ContainerElement.Container5.Top = 230
+			
+			ContainerElement.Checkbox6.Top = 240
+			ContainerElement.Label6.Top = 240
+			ContainerElement.Container6.Top = 270
 		ENDIF
 	ELSE
-		IF(RIGHT(checkedElement.Name, 1) = "4")
-			
+		IF(RIGHT(checkedElement.Name, 1) = "5")
+			ContainerElement.Checkbox5.Top = 200
+			ContainerElement.Label5.Top = 200
+			ContainerElement.Container5.Top = 230
+
+			IF checkedElement.Checked
+				ContainerElement.Checkbox6.Top = 320
+				ContainerElement.Label6.Top = 320
+				ContainerElement.Container6.Top = 350
+			ELSE
+				ContainerElement.Checkbox6.Top = 240
+				ContainerElement.Label6.Top = 240
+				ContainerElement.Container6.Top = 270
+			ENDIF
+		ELSE
+			ContainerElement.Checkbox6.Top = 240
+			ContainerElement.Label6.Top = 240
+			ContainerElement.Container6.Top = 270
+		
+			ContainerElement.Checkbox3.Top = 120
+			ContainerElement.Label3.Top = 120
+
 			ContainerElement.Checkbox4.Top = 160
 			ContainerElement.Label4.Top = 160
 			ContainerElement.Container4.Top = 190
-			
-			IF checkedElement.Checked
-				ContainerElement.Checkbox5.Top = ContainerElement.Checkbox4.Top + 130
-				ContainerElement.Label5.Top = ContainerElement.Label4.Top + 130
-				ContainerElement.Container5.Top = ContainerElement.Checkbox5.Top + 30
-			ELSE
-				ContainerElement.Checkbox5.Top = 200
-				ContainerElement.Label5.Top = 200
-				ContainerElement.Container5.Top = 230
-			ENDIF
-		ELSE
-			ContainerElement.Checkbox3.Top = 120
-			ContainerElement.Checkbox4.Top = 160
+
 			ContainerElement.Checkbox5.Top = 200
-			
-			ContainerElement.Label3.Top = 120
-			ContainerElement.Label4.Top = 160
 			ContainerElement.Label5.Top = 200
 			ContainerElement.Container5.Top = 230
 		ENDIF
 	ENDIF
 ENDFUNC
 
+*****************************************************************************
 FUNCTION ChangeContainer2ElementsPosition (ContainerElement, checkedElement)
+*****************************************************************************
+
 	***************************************************************
 	* Because of some bug, needed to position to left last element*
 	***************************************************************
@@ -180,7 +189,7 @@ FUNCTION ChangeContainer2ElementsPosition (ContainerElement, checkedElement)
 			ContainerElement.Label7.Top = ContainerElement.Label6.Top + 40
 			
 
-			&& set the container to an appropriate position
+			&& set the container of this checkbox to an appropriate position
 			ContainerElement.Container2.Top = checkedElement.Top + 30
 		ELSE
 		
@@ -373,7 +382,7 @@ FUNCTION InitializeComponenets (ContainerElement)
 	
 	FOR EACH oElement IN ContainerElement.Controls
 		MESSAGEBOX(oElement.Name)
-		IF(oElement.Class = "Check_Shape")
+		IF(oElement.Class = "Checkbox_image")
 			lnPositionCounter = oElement.Top
 		ELSE
 			IF(oElement.Class = "Container")
@@ -390,3 +399,136 @@ FUNCTION InitializeComponenets (ContainerElement)
 		oElement.Top = lnPositionCounter
 	ENDFOR
 ENDFUNC
+
+*****************************************************************************
+FUNCTION SetObjectProperty (oTort, oText, propertyName)
+*****************************************************************************
+	DO CASE
+		CASE propertyName = "Ksztalt"
+			oTort.Ksztalt = oText
+		CASE propertyName = "Waga"
+			oTort.Waga = oText
+		CASE propertyName = "SmakChild"
+			oTort.Smak = oText
+		CASE propertyName = "Napis"
+			oTort.Napis = oText
+	ENDCASE
+ENDFUNC
+
+*****************************************************************************
+FUNCTION SetObjectChildProperty (oTort, oText, propertyName)
+*****************************************************************************
+		DO CASE
+		CASE propertyName = "KsztaltChild"
+			oTort.KsztaltChild = " [" + oText + "]"
+		CASE propertyName = "WagaChild"
+			oTort.WagaChild = " [" + oText + "]"
+		CASE propertyName = "SmakChild"
+			oTort.SmakChild = " [" + oText + "]"
+		CASE propertyName = "NapisChld"
+			oTort.NapisChild = " [" + oText + "]"
+	ENDCASE
+ENDFUNC
+
+
+***********************************************
+FUNCTION GetContainerValue (oContainer)
+***********************************************
+
+	LOCAL ln_ReturnValue AS String, oCheckedElement AS Checkbox
+	ln_ReturnValue = ""
+
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Checkbox_image")
+			IF(oElement.Checked)
+				oCheckedElement = RIGHT(oElement.Name, 1)
+			ENDIF
+		ENDIF
+	ENDFOR
+
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Label")
+			IF(RIGHT(oElement.Name, 1) = oCheckedElement)
+				ln_ReturnValue = ln_ReturnValue + oElement.Caption
+			ENDIF
+		ENDIF
+	ENDFOR
+	
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Container")
+			IF(RIGHT(oElement.Name,1) = oCheckedElement)
+				ln_ReturnValue = ln_ReturnValue + " [" + GetContainerValue(oElement) + "]"
+			ENDIF
+		ENDIF
+	ENDFOR
+
+
+	RETURN ln_ReturnValue
+ENDFUNC
+
+***********************************************
+FUNCTION GetContainerValue1 (oContainer)
+***********************************************
+
+	LOCAL ln_ReturnValue AS String, oCheckedElement AS Checkbox
+	ln_ReturnValue = ""
+
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Checkbox_image")
+			IF(oElement.Checked)
+				oCheckedElement = RIGHT(oElement.Name, 1)
+			ENDIF
+		ENDIF
+	ENDFOR
+
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Label")
+			IF(RIGHT(oElement.Name, 1) = oCheckedElement)
+				ln_ReturnValue = ln_ReturnValue + oElement.Caption
+			ENDIF
+		ENDIF
+	ENDFOR
+	
+	FOR EACH oElement IN oContainer.Controls
+		IF(oElement.Class = "Container")
+			IF(SUBSTR(oElement.Name, 6, 1) = oCheckedElement)
+				IF(RIGHT(oElement.Name, 1) = "1")
+					ln_ReturnValue = ln_ReturnValue + " [" + GetContainerValue(oElement) + "]"
+				ENDIF
+			ENDIF
+		ENDIF
+	ENDFOR
+
+
+	RETURN ln_ReturnValue
+ENDFUNC
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -61,7 +61,7 @@ IF nRec > 0
      NEXT
  CATCH
  ENDTRY
- &&Zwolnij pamiec !!!
+ &&Free memeory !!!
      GlobalFree(m.lnAdd)
                     INSERT INTO (cAlias) FROM ARRAY xDat
 ENDIF

@@ -18,3 +18,15 @@ SET PROCEDURE TO "C:\zamowienia_tortow\PROGS\db_layer.prg" ADDITIVE
 
 DO FORM glowna_forma && start the main form
 READ events
+
+DEFINE CLASS Tort AS Custom
+	Ksztalt = ""
+	KsztaltChild = ""
+	Waga = ""
+	WagaChild = ""
+	Smak = ""
+	SmaChild = ""
+	Napis = ""
+	NapisChild = ""
+	TypTortu = ""
+ENDDEFINE
