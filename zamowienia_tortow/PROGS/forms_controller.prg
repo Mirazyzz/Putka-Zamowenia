@@ -446,19 +446,31 @@ FUNCTION GetContainerValue1 (oContainer)
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Checkbox_image")
 			IF(oElement.Checked)
-				oCheckedElement = RIGHT(oElement.Name, 1)
+				IF(LEN(oElement.Name) = 9)
+					oCheckedElement = RIGHT(oElement.Name, 1)
+				ELSE
+					oCheckedElement = RIGHT(oElement.Name, 2)
+				ENDIF
 			ENDIF
 		ENDIF
 	ENDFOR
 
-	MESSAGEBOX(oCheckedElement)
+	MESSAGEBOX(LEN("Label1_1"))
 
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Label")
 			&& Check if element is more than 10 or not
 			IF(LEN(oElement.Name) = 8)
+				MESSAGEBOX("yes")
+				IF(SUBSTR(oElement.Name, 6, 1) = oCheckedElement)
+					IF(RIGHT(oElement.Name, 1) = "1")
+						ln_ReturnValue = ln_ReturnValue + oElement.Caption
+					ENDIF
+				ENDIF
+			ELSE
 				IF(SUBSTR(oElement.Name, 6, 2) = oCheckedElement)
 					IF(RIGHT(oElement.Name, 1) = "1")
+						MESSAGEBOX(SUBSTR(oElement.Name, 6,2) + " = " + oCheckedElement + " ---> " + oElement.Name)
 						ln_ReturnValue = ln_ReturnValue + oElement.Caption
 					ENDIF
 				ENDIF
