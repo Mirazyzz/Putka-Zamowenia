@@ -400,42 +400,12 @@ FUNCTION InitializeComponenets (ContainerElement)
 	ENDFOR
 ENDFUNC
 
-*****************************************************************************
-FUNCTION SetObjectProperty (oTort, oText, propertyName)
-*****************************************************************************
-	DO CASE
-		CASE propertyName = "Ksztalt"
-			oTort.Ksztalt = oText
-		CASE propertyName = "Waga"
-			oTort.Waga = oText
-		CASE propertyName = "SmakChild"
-			oTort.Smak = oText
-		CASE propertyName = "Napis"
-			oTort.Napis = oText
-	ENDCASE
-ENDFUNC
-
-*****************************************************************************
-FUNCTION SetObjectChildProperty (oTort, oText, propertyName)
-*****************************************************************************
-		DO CASE
-		CASE propertyName = "KsztaltChild"
-			oTort.KsztaltChild = " [" + oText + "]"
-		CASE propertyName = "WagaChild"
-			oTort.WagaChild = " [" + oText + "]"
-		CASE propertyName = "SmakChild"
-			oTort.SmakChild = " [" + oText + "]"
-		CASE propertyName = "NapisChld"
-			oTort.NapisChild = " [" + oText + "]"
-	ENDCASE
-ENDFUNC
-
 
 ***********************************************
 FUNCTION GetContainerValue (oContainer)
 ***********************************************
 
-	LOCAL ln_ReturnValue AS String, oCheckedElement AS Checkbox
+	LOCAL ln_ReturnValue AS String, oCheckedElement AS String &&Checkbox
 	ln_ReturnValue = ""
 
 	FOR EACH oElement IN oContainer.Controls
@@ -470,7 +440,7 @@ ENDFUNC
 FUNCTION GetContainerValue1 (oContainer)
 ***********************************************
 
-	LOCAL ln_ReturnValue AS String, oCheckedElement AS Checkbox
+	LOCAL ln_ReturnValue AS String, oCheckedElement AS String
 	ln_ReturnValue = ""
 
 	FOR EACH oElement IN oContainer.Controls
@@ -481,16 +451,10 @@ FUNCTION GetContainerValue1 (oContainer)
 		ENDIF
 	ENDFOR
 
+	MESSAGEBOX(oCheckedElement.Name)
+
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Label")
-			IF(RIGHT(oElement.Name, 1) = oCheckedElement)
-				ln_ReturnValue = ln_ReturnValue + oElement.Caption
-			ENDIF
-		ENDIF
-	ENDFOR
-	
-	FOR EACH oElement IN oContainer.Controls
-		IF(oElement.Class = "Container")
 			IF(SUBSTR(oElement.Name, 6, 1) = oCheckedElement)
 				IF(RIGHT(oElement.Name, 1) = "1")
 					ln_ReturnValue = ln_ReturnValue + " [" + GetContainerValue(oElement) + "]"
@@ -498,7 +462,6 @@ FUNCTION GetContainerValue1 (oContainer)
 			ENDIF
 		ENDIF
 	ENDFOR
-
 
 	RETURN ln_ReturnValue
 ENDFUNC
