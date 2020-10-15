@@ -451,13 +451,16 @@ FUNCTION GetContainerValue1 (oContainer)
 		ENDIF
 	ENDFOR
 
-	MESSAGEBOX(oCheckedElement.Name)
+	MESSAGEBOX(oCheckedElement)
 
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Label")
-			IF(SUBSTR(oElement.Name, 6, 1) = oCheckedElement)
-				IF(RIGHT(oElement.Name, 1) = "1")
-					ln_ReturnValue = ln_ReturnValue + oElement.Caption
+			&& Check if element is more than 10 or not
+			IF(LEN(oElement.Name) = 8)
+				IF(SUBSTR(oElement.Name, 6, 2) = oCheckedElement)
+					IF(RIGHT(oElement.Name, 1) = "1")
+						ln_ReturnValue = ln_ReturnValue + oElement.Caption
+					ENDIF
 				ENDIF
 			ENDIF
 		ENDIF
