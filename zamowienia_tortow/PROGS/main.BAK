@@ -25,8 +25,10 @@ DEFINE CLASS Tort AS Custom
 	Waga = ""
 	WagaChild = ""
 	Smak = ""
-	SmaChild
+	SmaChild = ""
 	Napis = ""
-	NapisChild
+	NapisChild = ""
 	TypTortu = ""
 ENDDEFINE
+
+DEFINE CLASS Client AS Custom

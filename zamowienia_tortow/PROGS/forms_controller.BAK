@@ -400,14 +400,17 @@ FUNCTION InitializeComponenets (ContainerElement)
 	ENDFOR
 ENDFUNC
 
-
+&& Get the values the user has chosen from the Tort from
+&& To display them in confirmation form
 ***********************************************
 FUNCTION GetContainerValue (oContainer)
 ***********************************************
 
+	&& Return values
 	LOCAL ln_ReturnValue AS String, oCheckedElement AS String &&Checkbox
 	ln_ReturnValue = ""
 
+	&& Get the selected checkbox's number
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Checkbox_image")
 			IF(oElement.Checked)
@@ -416,26 +419,37 @@ FUNCTION GetContainerValue (oContainer)
 		ENDIF
 	ENDFOR
 
+	&& Get the label which belongs to checked checkbox
 	FOR EACH oElement IN oContainer.Controls
+		&& Check the type of element
 		IF(oElement.Class = "Label")
+			&& Check if this label belongs to the checked checkbox
+			&& e.g Checkbox1 - Label1; Checkbox2 - Label2
 			IF(RIGHT(oElement.Name, 1) = oCheckedElement)
 				ln_ReturnValue = ln_ReturnValue + oElement.Caption
 			ENDIF
 		ENDIF
 	ENDFOR
 	
+	&& Check if selected elements has a sub container
 	FOR EACH oElement IN oContainer.Controls
+		&& Check the type of element
 		IF(oElement.Class = "Container")
+			&& Check if this container belongs to checked checkbox
+			&& e.g Checkbox1 - Container1; Checkbox2 - Container2
 			IF(RIGHT(oElement.Name,1) = oCheckedElement)
+				&& Pass the container to this function recursivly
+				&& And add the return value to Outer function's return value
 				ln_ReturnValue = ln_ReturnValue + " [" + GetContainerValue(oElement) + "]"
 			ENDIF
 		ENDIF
 	ENDFOR
 
+RETURN ln_ReturnValue
 
-	RETURN ln_ReturnValue
-ENDFUNC
-
+&& Slightly different implementation of the above function
+&& For "Waga" container, because one checkbox
+&& contains several labels (but we need only one of them)
 ***********************************************
 FUNCTION GetContainerValue1 (oContainer)
 ***********************************************
@@ -443,6 +457,7 @@ FUNCTION GetContainerValue1 (oContainer)
 	LOCAL ln_ReturnValue AS String, oCheckedElement AS String
 	ln_ReturnValue = ""
 
+	&& Get the selected checkbox's value
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Checkbox_image")
 			IF(oElement.Checked)
@@ -454,9 +469,19 @@ FUNCTION GetContainerValue1 (oContainer)
 			ENDIF
 		ENDIF
 	ENDFOR
+	
+	&& Add the title label of the selected element
+	&& to the return value
+	DO CASE
+		CASE oCheckedElement < "6"
+			ln_ReturnValue = ln_ReturnValue + oContainer.TitleLabel1.Caption
+		CASE oCheckedElement < "9"
+			ln_ReturnValue = ln_ReturnValue + oContainer.TitleLabel2.Caption
+	OTHERWISE
+			ln_ReturnValue = ln_ReturnValue + oContainer.TitleLabel3.Caption
+	ENDCASE
 
-	MESSAGEBOX(oCheckedElement)
-
+	&& Get the selected element's label from the container
 	FOR EACH oElement IN oContainer.Controls
 		IF(oElement.Class = "Label")
 			&& Check if element is more than 10 or not
@@ -471,7 +496,7 @@ FUNCTION GetContainerValue1 (oContainer)
 					IF(LEN(oCheckedElement) > 1)
 						IF(SUBSTR(oElement.Name, 6, 2) = oCheckedElement)
 							IF(RIGHT(oElement.Name, 1) = "1")
-								ln_ReturnValue = ln_ReturnValue + oElement.Caption
+								ln_ReturnValue = ln_ReturnValue + " [" + oElement.Caption + "]"
 							ENDIF
 						ENDIF
 					ENDIF
@@ -480,8 +505,7 @@ FUNCTION GetContainerValue1 (oContainer)
 		ENDIF
 	ENDFOR
 
-	RETURN ln_ReturnValue
-ENDFUNC
+RETURN ln_ReturnValue
 
 
 

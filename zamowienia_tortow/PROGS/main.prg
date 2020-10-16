@@ -30,3 +30,13 @@ DEFINE CLASS Tort AS Custom
 	NapisChild = ""
 	TypTortu = ""
 ENDDEFINE
+
+DEFINE CLASS Client AS Custom
+	FullName = ""
+	PhoneNumber = ""
+	Email = ""
+	Confirmation = ""
+	ShopAdress = ""
+	DeliveryDate = ""
+	AdvancePayment = ""
+ENDDEFINE
