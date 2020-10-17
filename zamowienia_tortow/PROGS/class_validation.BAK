@@ -4,7 +4,7 @@ FUNCTION ContainerValidation(containerElement)
 && LPARAMETERS containerElement
 		IF(containerElement.Class = "Container")
 			FOR EACH oElement IN containerElement.Controls
-				IF(oElement.Class = "Check_shape")	
+				IF(oElement.Class = "Checkbox_image")	
 					IF(oElement.Checked)
 						
 						&& If there is checked checkbox, then check if it is
@@ -24,6 +24,10 @@ FUNCTION ContainerValidation(containerElement)
 						
 						containerElement.ErrorLabel.Visible = .F. && Hide error star
 						RETURN .T.	&& Valid container
+					ENDIF
+				ELSE
+					IF(oElement.Class = "Textbox")
+						RETURN TextboxValidation(oElement)
 					ENDIF
 				ENDIF
 			ENDFOR

@@ -416,6 +416,14 @@ FUNCTION GetContainerValue (oContainer)
 			IF(oElement.Checked)
 				oCheckedElement = RIGHT(oElement.Name, 1)
 			ENDIF
+		ELSE
+			IF(oElement.Class = "Textbox")
+				ln_ReturnValue = ln_ReturnValue + oElement.Text
+				
+				&& Clean out the spaces from textbox
+				ln_ReturnValue = ALLTRIM(ln_ReturnValue)
+				RETURN ln_ReturnValue
+			ENDIF
 		ENDIF
 	ENDFOR
 

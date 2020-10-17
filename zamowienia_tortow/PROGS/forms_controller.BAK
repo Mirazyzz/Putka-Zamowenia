@@ -416,6 +416,12 @@ FUNCTION GetContainerValue (oContainer)
 			IF(oElement.Checked)
 				oCheckedElement = RIGHT(oElement.Name, 1)
 			ENDIF
+		ELSE
+			IF(oElement.Class = "Textbox")
+				ln_ReturnValue = ln_ReturnValue + oElement.Text
+				ln_ReturnValue = ALLTRIM(ln_ReturnValue)
+				RETURN ln_ReturnValue
+			ENDIF
 		ENDIF
 	ENDFOR
 
@@ -488,7 +494,7 @@ FUNCTION GetContainerValue1 (oContainer)
 			IF(LEN(oElement.Name) = 8)
 				IF(SUBSTR(oElement.Name, 6, 1) = oCheckedElement)
 					IF(RIGHT(oElement.Name, 1) = "1")
-						ln_ReturnValue = ln_ReturnValue + oElement.Caption
+						ln_ReturnValue = ln_ReturnValue + " [" + oElement.Caption + "]"
 					ENDIF
 				ENDIF
 			ELSE

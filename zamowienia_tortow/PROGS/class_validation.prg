@@ -25,6 +25,10 @@ FUNCTION ContainerValidation(containerElement)
 						containerElement.ErrorLabel.Visible = .F. && Hide error star
 						RETURN .T.	&& Valid container
 					ENDIF
+				ELSE
+					IF(oElement.Class = "Textbox_class_app")
+						RETURN TextboxValidation(oElement)
+					ENDIF
 				ENDIF
 			ENDFOR
 		ENDIF
