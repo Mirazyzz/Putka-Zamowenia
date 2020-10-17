@@ -3,7 +3,6 @@
 	* Main Program *
 	****************															
 
-
 && Set initial properties
 
 SET TALK OFF && Turn of service messages
