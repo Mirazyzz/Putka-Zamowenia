@@ -27,7 +27,13 @@ FUNCTION ContainerValidation(containerElement)
 					ENDIF
 				ELSE
 					IF(oElement.Class = "Textbox_class_app")
-						RETURN TextboxValidation(oElement)
+						IF(TextboxValidation(oElement))
+							RETURN .T.
+						ENDIF
+					ELSE
+						IF(oElement.Class = "Textbox")
+							RETURN .T.
+						ENDIF
 					ENDIF
 				ENDIF
 			ENDFOR
